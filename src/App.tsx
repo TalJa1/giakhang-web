@@ -2,6 +2,7 @@ import About from './components/About'
 import Achievements from './components/Achievements'
 import Beyond from './components/Beyond'
 import Contact from './components/Contact'
+import Cursor from './components/Cursor'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -25,6 +26,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Cursor />
     </>
   )
 }

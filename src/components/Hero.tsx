@@ -1,5 +1,6 @@
-import { Fragment } from 'react'
+import { Fragment, useRef } from 'react'
 import { home } from '../data/content'
+import { useHeroParallax } from '../hooks/useHeroParallax'
 import { ArrowRightIcon } from './Icons'
 import HighlightsStrip from './HighlightsStrip'
 import Img from './Img'
@@ -7,6 +8,8 @@ import Img from './Img'
 export default function Hero() {
   const [lead, ...rest] = home.paragraphs
   const eyebrowParts = home.eyebrow.split(' | ')
+  const visualRef = useRef<HTMLDivElement>(null)
+  useHeroParallax(visualRef)
 
   return (
     <section id="home" className="hero" aria-labelledby="home-title">
@@ -44,7 +47,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero__visual">
+        <div ref={visualRef} className="hero__visual">
           <div className="hero__frame">
             <Img name={home.image.name} alt={home.image.alt} ratio="4 / 5" position="center top" eager />
           </div>

@@ -204,7 +204,13 @@ button {
   transition:
     background-color 0.2s ease,
     color 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    translate 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn svg {
+  transition: transform 0.2s ease;
 }
 
 .btn--sm {
@@ -220,6 +226,25 @@ button {
 
 .btn--primary:hover {
   background: var(--red-dark);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    translate: 0 -2px;
+  }
+
+  .btn--primary:hover {
+    box-shadow: 0 8px 18px -8px rgb(181 18 27 / 0.55);
+  }
+
+  .btn:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+.btn:active {
+  translate: 0 0;
+  box-shadow: none;
 }
 
 .btn--outline {
@@ -373,6 +398,16 @@ button {
   background: rgb(17 24 39 / 0.94);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox {
+    animation: fade-in 0.2s ease both;
+  }
+
+  .lightbox__stage > * {
+    animation: pop-in 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+}
+
 .lightbox__stage {
   display: grid;
   place-items: center;
@@ -407,6 +442,9 @@ button {
   background: rgb(17 24 39 / 0.6);
   color: var(--white);
   cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .lightbox__btn:hover {
@@ -475,6 +513,23 @@ button {
   height: 22px;
   background: var(--red);
   transform: skewX(-18deg);
+  transition: transform 0.3s ease;
+}
+
+.brand:hover .brand__mark {
+  transform: skewX(-18deg) scaleY(1.2);
+}
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
 }
 
 .nav {
@@ -577,6 +632,12 @@ button {
 
   .nav.is-open {
     display: block;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .nav.is-open {
+      animation: drop-in 0.2s ease both;
+    }
   }
 
   .nav__list {
@@ -753,6 +814,8 @@ button {
   width: 58%;
   background: var(--red);
   clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%);
+  transform: translate3d(calc(var(--px, 0) * 10px), calc(var(--py, 0) * 8px), 0);
+  transition: transform 0.5s ease-out;
 }
 
 .hero__frame {
@@ -764,6 +827,8 @@ button {
   background:
     linear-gradient(118deg, transparent 0 56%, rgb(181 18 27 / 0.1) 56% 70%, transparent 70%),
     var(--gray-bg);
+  transform: translate3d(calc(var(--px, 0) * -6px), calc(var(--py, 0) * -5px), 0);
+  transition: transform 0.5s ease-out;
 }
 
 .hero__frame .media {
@@ -820,6 +885,16 @@ button {
   background: var(--white);
   border: 1px solid var(--line);
   color: var(--red);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.highlights__item:hover .highlights__icon {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
 }
 
 .highlights__year {
@@ -969,6 +1044,25 @@ button {
 .projects-grid {
   display: grid;
   gap: 32px;
+}
+
+.project-card,
+.achievement-card,
+.beyond-card {
+  transition:
+    translate 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .project-card:hover,
+  .achievement-card:hover,
+  .beyond-card:hover {
+    translate: 0 -4px;
+    box-shadow:
+      0 1px 2px rgb(17 24 39 / 0.05),
+      0 18px 36px -16px rgb(17 24 39 / 0.22);
+  }
 }
 
 .project-card {
@@ -1452,17 +1546,144 @@ button {
 /* ==========================================================================
    Motion
    ========================================================================== */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* Mouse dot: replaces the system cursor on fine pointers (see Cursor.tsx). */
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cursor__dot {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.cursor.is-visible .cursor__dot {
+  opacity: 1;
+}
+
+.cursor.is-active .cursor__dot {
+  background: rgb(181 18 27 / 0.18);
+  transform: scale(3.6);
+}
+
+.cursor.is-pressed .cursor__dot {
+  transform: scale(0.8);
+}
+
+.cursor.is-active.is-pressed .cursor__dot {
+  transform: scale(3);
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  /* Hero load-in: staggered rise. */
+  .hero__text > *,
+  .hero__visual {
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero__text > :nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .hero__text > :nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  .hero__text > :nth-child(4) {
+    animation-delay: 0.24s;
+  }
+
+  .hero__text > :nth-child(n + 5) {
+    animation-delay: 0.32s;
+  }
+
+  .hero__visual {
+    animation-delay: 0.2s;
+  }
+
+  /* Scroll reveal. The trailing transitions keep card hover motion snappy once revealed. */
   .reveal-ready .reveal {
     opacity: 0;
     transform: translateY(18px);
     transition:
-      opacity 0.6s ease,
-      transform 0.6s ease;
+      opacity 0.6s ease var(--reveal-delay, 0s),
+      transform 0.6s ease var(--reveal-delay, 0s),
+      translate 0.25s ease,
+      box-shadow 0.25s ease;
   }
 
   .reveal-ready .reveal.is-visible {
     opacity: 1;
+    transform: none;
+  }
+
+  /* Stagger siblings that enter together. */
+  .achievement-card:nth-child(3n + 2),
+  .projects-grid--side-by-side .project-card:nth-child(2),
+  .beyond-card:nth-child(2) {
+    --reveal-delay: 0.1s;
+  }
+
+  .achievement-card:nth-child(3n + 3) {
+    --reveal-delay: 0.2s;
+  }
+
+  /* Eyebrow rule draws in as its heading appears. */
+  .reveal-ready .reveal .eyebrow::before {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s ease 0.15s;
+  }
+
+  .reveal-ready .reveal.is-visible .eyebrow::before {
     transform: none;
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { LINKS } from '../config/media'
 import { nav, site } from '../data/content'
 import { CloseIcon, MenuIcon } from './Icons'
@@ -8,6 +8,30 @@ const DESKTOP_NAV = '(min-width: 1180px)'
 export default function Header() {
   const [active, setActive] = useState('home')
   const [menuOpen, setMenuOpen] = useState(false)
+  const progressRef = useRef<HTMLSpanElement>(null)
+
+  // Thin reading-progress line along the bottom edge of the header.
+  useEffect(() => {
+    const bar = progressRef.current
+    if (!bar) return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      bar.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
 
   // Highlight the section that crosses the middle of the viewport.
   useEffect(() => {
@@ -83,6 +107,7 @@ export default function Header() {
           </button>
         </div>
       </div>
+      <span ref={progressRef} className="scroll-progress" aria-hidden="true" />
     </header>
   )
 }
