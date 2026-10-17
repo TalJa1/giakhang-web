@@ -12,11 +12,16 @@ type Props = {
   onNavigate: (index: number) => void
 }
 
+const SWIPE = 50
+
 export default function Lightbox({ items, index, onClose, onNavigate }: Props) {
   const dialogRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
+  const swipeX = useRef<number | null>(null)
   const count = items.length
   const item = items[index]
+  const prev = () => onNavigate((index - 1 + count) % count)
+  const next = () => onNavigate((index + 1) % count)
 
   // Focus the dialog on open, lock page scroll, and return focus to the opener on close.
   useEffect(() => {
@@ -65,26 +70,27 @@ export default function Lightbox({ items, index, onClose, onNavigate }: Props) {
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
+      onPointerDown={(e) => {
+        if (e.pointerType !== 'mouse') swipeX.current = e.clientX
+      }}
+      onPointerUp={(e) => {
+        const start = swipeX.current
+        swipeX.current = null
+        if (start === null || count < 2) return
+        const dx = e.clientX - start
+        if (dx > SWIPE) prev()
+        else if (dx < -SWIPE) next()
+      }}
     >
       <button ref={closeRef} type="button" className="lightbox__btn lightbox__close" aria-label="Close" onClick={onClose}>
         <CloseIcon size={22} />
       </button>
       {count > 1 && (
         <>
-          <button
-            type="button"
-            className="lightbox__btn lightbox__prev"
-            aria-label="Previous"
-            onClick={() => onNavigate((index - 1 + count) % count)}
-          >
+          <button type="button" className="lightbox__btn lightbox__prev" aria-label="Previous" onClick={prev}>
             <ChevronLeftIcon size={26} />
           </button>
-          <button
-            type="button"
-            className="lightbox__btn lightbox__next"
-            aria-label="Next"
-            onClick={() => onNavigate((index + 1) % count)}
-          >
+          <button type="button" className="lightbox__btn lightbox__next" aria-label="Next" onClick={next}>
             <ChevronRightIcon size={26} />
           </button>
         </>
@@ -95,12 +101,22 @@ export default function Lightbox({ items, index, onClose, onNavigate }: Props) {
           if (e.target === e.currentTarget) onClose()
         }}
       >
-        {item.kind === 'image' ? (
-          <Img key={item.name} name={item.name} alt={item.alt} fit="contain" eager />
-        ) : (
-          <Video key={item.name} name={item.name} label={item.alt} ratio={null} autoPlay />
-        )}
+        <div key={item.kind + item.name} className="lightbox__media">
+          {item.kind === 'image' ? (
+            <Img name={item.name} alt={item.alt} eager />
+          ) : (
+            <Video name={item.name} label={item.alt} ratio={null} autoPlay />
+          )}
+        </div>
       </div>
+      <p className="lightbox__caption">
+        {count > 1 && (
+          <span className="lightbox__count">
+            {String(index + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
+          </span>
+        )}
+        {item.alt}
+      </p>
     </div>,
     document.body,
   )

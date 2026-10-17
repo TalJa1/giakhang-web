@@ -1,6 +1,8 @@
 export const BUCKET = "main-ada2c.firebasestorage.app";
 export const BASE_PATH = "GiaKhang/"; // case-sensitive; keep the trailing slash
 
+// Values are file names inside BASE_PATH. A value starting with "/" is served from this site's own
+// public/ folder instead of Firebase (used for the certificate image extracted from the PDF).
 export const IMAGES = {
   "home-hero": "home-hero.png",
   "about-school": "about-school.jpeg",
@@ -14,6 +16,8 @@ export const IMAGES = {
   "proj2-1": "proj2-1.jpg",
   "proj2-2": "proj2-2.jpg",
   "proj2-3": "proj2-3.jpg",
+  "proj2-4": "proj2-4.jpg",
+  "proj2-5": "proj2-5.png",
   "vex-champion": "vex-champion.jpg",
   "abrsm-certificate": "abrsm-certificate.jpg",
   "yes-main": "yes-main.png",
@@ -22,12 +26,12 @@ export const IMAGES = {
   "charity-3": "charity-3.jpg",
   "charity-4": "charity-4.jpg",
   "training-photo": "training-photo.jpg",
+  "training-certificate": "/media/training-certificate.jpg",
   "weread-club": "weread-club.png",
   "piano": "piano.jpg"
 } as const;
 
 export const VIDEOS = {
-  "about-assembly": "about-assembly.mp4",
   "vex-champion": "vex-champion.mp4",
   "charity-video": "charity-video.mp4",
   "sviif-award-3": "sviif-award-3.mp4"
@@ -37,15 +41,10 @@ export const DOCS = {
   "training-certificate": "training-certificate.pdf"
 } as const;
 
-// Media NOT uploaded yet (or not usable yet). Keys listed here are NOT requested from Firebase; they show
-// the placeholder immediately. After uploading a file, delete its key from the list.
-// charity-1, charity-3 and charity-4 currently exist only as .HEIC (browsers cannot display HEIC),
-// so they stay pending until JPG versions are uploaded under the names above.
-export const PENDING_IMAGES: string[] = [
-  "proj2-1", "proj2-2", "proj2-3", "piano", "training-photo",
-  "charity-1", "charity-3", "charity-4"
-];
-export const PENDING_VIDEOS: string[] = ["about-assembly"];
+// Media NOT uploaded yet. Keys listed here are never requested and their slot is left out of the page
+// (the piano card shows a keyboard graphic instead). After uploading a file, delete its key from the list.
+export const PENDING_IMAGES: string[] = ["training-photo", "piano"];
+export const PENDING_VIDEOS: string[] = [];
 export const PENDING_DOCS: string[] = [];
 
 // If a configured image fails (wrong extension), try the same base name with these extensions before giving up.
@@ -56,6 +55,8 @@ export const LINKS = {
   sviifPoster: "https://drive.google.com/file/d/1uOTR8kAjf5ubeaTWtuJ9Gj6ofe65G6LH/view?usp=sharing",
   cycloidalReport: "https://drive.google.com/file/d/1g6yb9W8opMugpvzXC9c9a7tt2zg6t87Q/view?usp=sharing",
   esp32Report: "https://docs.google.com/document/d/1ty1GtNdOlbxV6zpmMP_lbBLLH1MXkmnI/edit?usp=sharing&ouid=111259990397367642739&rtpof=true&sd=true",
-  esp32Intro: "https://drive.google.com/file/d/1w7eXaWg-nnLAZ3Nd4YSziNWcYAkIhToY/view?usp=sharing"
+  esp32Intro: "https://drive.google.com/file/d/1w7eXaWg-nnLAZ3Nd4YSziNWcYAkIhToY/view?usp=sharing",
+  vexWorldsReel1: "https://www.facebook.com/reel/822652264183837",
+  vexWorldsReel2: "https://www.facebook.com/reel/922802633938432"
 };
 export const CONTACT_EMAIL = ""; // empty = hide the email line (the client document only has the placeholder "[Student Email]")

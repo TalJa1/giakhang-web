@@ -15,11 +15,11 @@ npm run lint
 
 | What | File |
 | --- | --- |
-| All visible text (verbatim from the client brief) | `src/data/content.ts` |
+| All visible text (verbatim from the client brief), gallery order and image ratios | `src/data/content.ts` |
 | Media file names, pending lists, external links, contact email | `src/config/media.ts` |
-| Projects layout switch | `src/config/layout.ts` |
-| Colours, fonts, spacing, responsive rules | `src/index.css` (tokens at the top) |
+| Colours, fonts, spacing, responsive rules, animations | `src/index.css` (tokens at the top, motion at the bottom) |
 | Sections | `src/components/*.tsx` |
+| Scroll reveal, scroll progress, hover tilt / magnetic buttons | `src/hooks/` |
 
 ## Media (Firebase Storage)
 
@@ -41,11 +41,21 @@ Open `src/config/media.ts`:
   `.webp`, `.JPG`, `.JPEG`, `.PNG` (see `FALLBACK_EXTENSIONS`) before showing the placeholder, so a wrong
   extension is not fatal.
 - Browsers cannot display `.HEIC`. Convert HEIC photos to JPG before uploading.
+- A value starting with `/` is served from this site's `public/` folder instead of Firebase. The training
+  certificate image (`/media/training-certificate.jpg`) works this way: it was extracted from the PDF so the
+  certificate shows directly on the page.
+
+### Galleries show images uncropped
+
+Galleries are "justified": every row fills the width and all items in a row share one height, computed from each
+file's real aspect ratio. So each gallery item in `src/data/content.ts` has a `ratio` (width ÷ height), and a
+gallery can set `rows`, e.g. `rows: [2, 3]` = two items in the first row, three in the second. **If you replace a
+file with one of a different shape, update its `ratio`**, or the image will be cropped slightly to fit.
 
 ### After uploading a missing file
 
-Keys listed in `PENDING_IMAGES`, `PENDING_VIDEOS` or `PENDING_DOCS` are never requested. They show an
-"Image / Video / Certificate coming soon" placeholder that already has the right size, so the layout won't shift.
+Keys listed in `PENDING_IMAGES`, `PENDING_VIDEOS` or `PENDING_DOCS` are never requested and their slot is simply
+left out of the page (no "coming soon" boxes).
 
 1. Upload the file to the `GiaKhang/` folder with exactly the name listed in `IMAGES` / `VIDEOS` / `DOCS`
    (or change the name there).
@@ -62,16 +72,14 @@ Large phone photos slow the page down. Before uploading:
 - Free tools: [Squoosh](https://squoosh.app), or `sharp`/ImageMagick for batches.
 - Videos: keep them short, H.264 MP4, 720p is plenty.
 
-## Projects layout
+## Motion
 
-`src/config/layout.ts`:
+All animation respects the visitor's "reduce motion" setting: with it on, the page renders static and complete.
 
-```ts
-export const PROJECTS_LAYOUT: 'side-by-side' | 'stacked' = 'side-by-side'
-```
-
-- `"side-by-side"`: the two project cards sit next to each other on screens ≥ 1024 px and stack below that.
-- `"stacked"`: one card per row at every width; on desktop each card shows its images beside its text.
+- Scroll reveals: add `data-reveal="up" | "left" | "right" | "scale" | "wipe" | "fade"` to an element; children of a
+  `data-stagger` element enter one after another.
+- `data-tilt` (3D tilt + glare) and `data-magnetic` (buttons lean toward the pointer) work with a mouse only.
+- The achievements timeline line and the philosophy quote are scroll-linked (`useScrollProgress`).
 
 ## Deploy to Vercel
 
@@ -83,11 +91,8 @@ export const PROJECTS_LAYOUT: 'side-by-side' | 'stacked' = 'side-by-side'
 
 ## Still needed
 
-These slots currently show placeholders:
+Optional. These slots are hidden until the file exists:
 
-- [ ] `proj2-1.jpg`, `proj2-2.jpg`, `proj2-3.jpg`: ESP32 Smart Home System photos
-- [ ] `piano.jpg`: Piano photo
-- [ ] `training-photo.jpg`: Saigon Hi-Tech Park Training Center photo
-- [ ] `charity-1.jpg`, `charity-3.jpg`, `charity-4.jpg`: JPG versions are needed (only `.HEIC` exists now)
-- [ ] `about-assembly.mp4`: video for the About section
+- [ ] `piano.jpg`: Piano photo (until then the piano card shows an animated keyboard)
+- [ ] `training-photo.jpg`: Saigon Hi-Tech Park Training Center photo (would appear under the certificate)
 - [ ] Contact email: set `CONTACT_EMAIL` in `src/config/media.ts` (the email line stays hidden while it is empty)

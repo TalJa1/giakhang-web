@@ -1,22 +1,24 @@
-// ALL visible copy for the site. Text is verbatim from the client's brief (section 5) — do not reword.
+// ALL visible copy for the site. Text is verbatim from the client's brief (section 5) and the revision
+// document ("Website bổ sung và chỉnh sửa") — do not reword.
 // Alt text and aria labels are not visible copy; they only describe the media for screen readers.
+// Media `ratio` values are the real width / height of each file (galleries show images uncropped).
 import { CONTACT_EMAIL, LINKS } from '../config/media'
-import type { DocKey, ImageKey, VideoKey } from '../lib/media'
-import type { IconName, ImageItem, LinkButton, MediaItem } from '../types'
+import type { DocKey, ImageKey } from '../lib/media'
+import type { IconName, ImageItem, LinkButton, MediaItem, Stat } from '../types'
 
-/* ---------- Site chrome (the only text not taken from section 5) ---------- */
+/* ---------- Site chrome (the only text not taken from the brief) ---------- */
 
 export const site = {
   brand: 'Gia Khang',
   resume: 'Resume',
   footer: '© 2026 Gia Khang',
+  backToTop: 'Back to top',
 }
 
 export const ui = {
   imageSoon: 'Image coming soon',
   videoSoon: 'Video coming soon',
-  certificateSoon: 'Certificate coming soon',
-  viewCertificate: 'View Certificate',
+  viewPdf: 'Open PDF',
 }
 
 export const nav = [
@@ -47,10 +49,11 @@ export const home = {
   image: { name: 'home-hero', alt: 'Portrait of Gia Khang' } as { name: ImageKey; alt: string },
 }
 
-// Highlights strip: reuses the achievements text from 5.4 exactly.
+// Highlights strip: reuses the achievements text exactly.
 export const highlights: { year: string; text: string; icon: IconName }[] = [
   { year: '2026', text: 'Gold Award — Silicon Valley International Invention Festival (SVIIF)', icon: 'medal' },
-  { year: '2026', text: 'Champion — VEX Robotics, Manhattan State', icon: 'trophy' },
+  { year: '2026', text: 'Champion — Massachusetts VEX V5 Robotics High School State Championship', icon: 'trophy' },
+  { year: '2026', text: 'Participant — 2026 VEX Robotics World Championship', icon: 'globe' },
   { year: '2019', text: 'ABRSM Grade 4 Piano', icon: 'music' },
 ]
 
@@ -61,16 +64,14 @@ export const about = {
   heading: "Hi, I'm Gia Khang.",
   intro:
     'I am a high school student at The Cambridge School of Weston in Massachusetts, with a growing passion for mechanical engineering, robotics, and intelligent systems.',
-  // about-school is a landscape campus photo; about-portrait is the school logo.
-  schoolImages: [
-    { name: 'about-school', alt: 'School campus', ratio: '16 / 9' },
-    { name: 'about-portrait', alt: 'The Cambridge School of Weston logo', ratio: '1 / 1' },
-  ] as { name: ImageKey; alt: string; ratio: string }[],
+  school: {
+    photo: { name: 'about-school', alt: 'The Cambridge School of Weston campus' } as { name: ImageKey; alt: string },
+    logo: { name: 'about-portrait', alt: 'The Cambridge School of Weston logo' } as { name: ImageKey; alt: string },
+  },
   body: [
     'My academic journey began at International School Ho Chi Minh City, where I developed an interest in science, technology, and hands-on experimentation. Moving to the United States introduced me to a new learning environment and encouraged me to become more independent, curious, and open to different perspectives.',
     'I enjoy exploring the intersection of mechanical design, electronics, and programming. Whether I am working with an ESP32 microcontroller, studying robotic transmission systems, or learning about industrial automation, I am motivated by the challenge of transforming technical knowledge into functional solutions.',
   ],
-  video: { name: 'about-assembly', alt: 'Assembly video' } as { name: VideoKey; alt: string },
   closing:
     'Beyond engineering, I enjoy playing the piano, reading, and participating in student-led communities. These experiences remind me that creativity, communication, and collaboration are just as important as technical knowledge.',
   philosophy: {
@@ -82,13 +83,20 @@ export const about = {
 
 /* ---------- 5.3 PROJECTS ---------- */
 
+export type Gallery = {
+  items: MediaItem[]
+  /** Items per row on wide screens, e.g. [2, 3]. Every row fills the width at one shared height. */
+  rows?: number[]
+}
+
 export type Project = {
   id: string
+  num: string
   label: string
   title: string
   dates: string
-  award?: { text: string; media: MediaItem[] }
-  media: ImageItem[]
+  award?: { text: string; gallery: Gallery }
+  gallery: Gallery
   subheading: string
   paragraphs: string[]
   highlightsHeading: string
@@ -103,23 +111,29 @@ export const projects: { label: string; cards: Project[] } = {
   cards: [
     {
       id: 'cycloidal-drive',
+      num: '01',
       label: 'Featured Project 01',
       title: 'Cycloidal Drive for Robotic Arm Applications',
       dates: 'June – August 2026',
       award: {
         text: 'SVIIF 2026 — Gold Award',
-        media: [
-          { kind: 'image', name: 'sviif-award-1', alt: 'SVIIF 2026 Gold Award, photo 1', position: 'center 30%' },
-          { kind: 'image', name: 'sviif-award-2', alt: 'SVIIF 2026 Gold Award, photo 2', position: 'center 30%' },
-          { kind: 'video', name: 'sviif-award-3', alt: 'SVIIF 2026 Gold Award video' },
+        gallery: {
+          items: [
+            { kind: 'image', name: 'sviif-award-1', alt: 'SVIIF 2026 Gold Award diploma and medal', ratio: 1.29 },
+            { kind: 'image', name: 'sviif-award-2', alt: 'The team at the Silicon Valley International Invention Festival', ratio: 1.333 },
+            { kind: 'video', name: 'sviif-award-3', alt: 'SVIIF 2026 Gold Award video', ratio: 16 / 9 },
+          ],
+        },
+      },
+      gallery: {
+        rows: [2, 2],
+        items: [
+          { kind: 'image', name: 'proj1-product-1', alt: 'Exploded view of the cycloidal drive with labelled parts', ratio: 1.833 },
+          { kind: 'image', name: 'proj1-product-3', alt: '3D CAD model of the cycloidal drive', ratio: 0.956 },
+          { kind: 'image', name: 'proj1-product-2', alt: 'Cycloidal disk and ring pins', ratio: 1.796 },
+          { kind: 'image', name: 'proj1-product-4', alt: 'Fabricated 3D-printed cycloidal drive prototype', ratio: 0.956 },
         ],
       },
-      media: [
-        { kind: 'image', name: 'proj1-product-1', alt: 'Cycloidal drive prototype, image 1', fit: 'contain' },
-        { kind: 'image', name: 'proj1-product-2', alt: 'Cycloidal drive prototype, image 2', fit: 'contain' },
-        { kind: 'image', name: 'proj1-product-3', alt: 'Cycloidal drive prototype, image 3', fit: 'contain' },
-        { kind: 'image', name: 'proj1-product-4', alt: 'Cycloidal drive prototype, image 4', fit: 'contain' },
-      ],
       subheading: 'Designing Motion with Precision',
       paragraphs: [
         'Robotic arms require transmission systems that balance compact dimensions, torque capacity, and precise movement. Our team explored how a cycloidal drive could address these engineering requirements.',
@@ -147,14 +161,20 @@ export const projects: { label: string; cards: Project[] } = {
     },
     {
       id: 'esp32-smart-home',
+      num: '02',
       label: 'Featured Project 02',
       title: 'ESP32 Smart Home System',
       dates: 'March – May 2026',
-      media: [
-        { kind: 'image', name: 'proj2-1', alt: 'ESP32 Smart Home System prototype, image 1' },
-        { kind: 'image', name: 'proj2-2', alt: 'ESP32 Smart Home System prototype, image 2' },
-        { kind: 'image', name: 'proj2-3', alt: 'ESP32 Smart Home System prototype, image 3' },
-      ],
+      gallery: {
+        rows: [2, 3],
+        items: [
+          { kind: 'image', name: 'proj2-2', alt: 'ESP32 Smart Home System enclosure, 3D model', ratio: 1.906 },
+          { kind: 'image', name: 'proj2-3', alt: 'ESP32 Smart Home System room layout, 3D model', ratio: 1.603 },
+          { kind: 'image', name: 'proj2-1', alt: 'ESP32 Smart Home System, top view of the model', ratio: 0.874 },
+          { kind: 'image', name: 'proj2-4', alt: 'ESP32 Smart Home System wiring diagram with sensors, relays and servos', ratio: 1.244 },
+          { kind: 'image', name: 'proj2-5', alt: 'SmartHome web interface for monitoring and remote control', ratio: 0.655 },
+        ],
+      },
       subheading: 'Making Everyday Spaces Smarter',
       paragraphs: [
         'What if everyday household systems could automatically respond to changing environmental conditions?',
@@ -186,13 +206,14 @@ export const projects: { label: string; cards: Project[] } = {
 /* ---------- 5.4 ACHIEVEMENTS ---------- */
 
 export type Achievement = {
+  id: string
   year: string
   title: string
   detail: string
   org?: string
   icon: IconName
-  image: ImageItem
-  video?: { name: VideoKey; alt: string }
+  gallery?: Gallery
+  links?: LinkButton[]
 }
 
 export const achievements = {
@@ -205,27 +226,49 @@ export const achievements = {
   subheading: 'Selected Achievements',
   items: [
     {
+      id: 'sviif',
       year: '2026',
       title: 'Gold Award',
       detail: 'Silicon Valley International Invention Festival (SVIIF)',
       icon: 'medal',
-      image: { kind: 'image', name: 'sviif-award-1', alt: 'Gold Award, Silicon Valley International Invention Festival (SVIIF)', position: 'center 30%' },
+      gallery: {
+        items: [{ kind: 'image', name: 'sviif-award-1', alt: 'Gold Award, Silicon Valley International Invention Festival (SVIIF)', ratio: 1.29 }],
+      },
     },
     {
+      id: 'vex-state',
       year: '2026',
       title: 'Champion',
-      detail: 'VEX Robotics, Manhattan State',
+      detail: 'Massachusetts VEX V5 Robotics High School State Championship',
       icon: 'trophy',
-      image: { kind: 'image', name: 'vex-champion', alt: 'Champion, VEX Robotics, Manhattan State', position: 'center 30%' },
-      video: { name: 'vex-champion', alt: 'VEX Robotics, Manhattan State video' },
+      gallery: {
+        items: [
+          { kind: 'image', name: 'vex-champion', alt: 'Gia Khang at the Massachusetts VEX Robotics State Championship', ratio: 4 / 3 },
+          { kind: 'video', name: 'vex-champion', alt: 'Massachusetts VEX V5 Robotics State Championship video', ratio: 9 / 16 },
+        ],
+      },
     },
     {
+      id: 'vex-worlds',
+      year: '2026',
+      title: 'Participant',
+      detail: '2026 VEX Robotics World Championship – VEX V5 Robotics Competition (High School Division)',
+      icon: 'globe',
+      links: [
+        { label: 'Watch Reel 01', href: LINKS.vexWorldsReel1 },
+        { label: 'Watch Reel 02', href: LINKS.vexWorldsReel2 },
+      ],
+    },
+    {
+      id: 'abrsm',
       year: '2019',
       title: 'ABRSM Grade 4 Piano',
       detail: 'Graded Examination in Music Performance',
       org: 'Associated Board of the Royal Schools of Music (ABRSM)',
       icon: 'music',
-      image: { kind: 'image', name: 'abrsm-certificate', alt: 'ABRSM Grade 4 Piano certificate', fit: 'contain' },
+      gallery: {
+        items: [{ kind: 'image', name: 'abrsm-certificate', alt: 'ABRSM Grade 4 Piano certificate', ratio: 0.75 }],
+      },
     },
   ] satisfies Achievement[],
 }
@@ -246,6 +289,12 @@ export const leadership = {
       'As Vice President, I have supported a 10-member student engineering team, mentored new members, and contributed to academic programming and community-focused projects.',
       'My experience at YES has taught me that leadership is not only about organizing people, but also about helping others develop the confidence to explore new ideas.',
     ],
+    // Figures taken from the paragraphs above.
+    stats: [
+      { value: 100, suffix: '+', label: 'educational resources' },
+      { value: 500, suffix: '+', label: 'engagements' },
+      { value: 10, label: 'member student engineering team' },
+    ] satisfies Stat[],
   },
   charity: {
     title: 'Math & Logical Thinking Education Project',
@@ -258,21 +307,33 @@ export const leadership = {
       'We also provided 15 STEM building kits and 50 essential supply packages, with a total value of approximately $310 USD, to support hands-on learning and the educational needs of disadvantaged students.',
       'This experience reminded me that introducing a child to a new way of thinking can be just as meaningful as developing a new technical product.',
     ],
-    gallery: [
-      { kind: 'image', name: 'charity-1', alt: 'Math & Logical Thinking Education Project, photo 1' },
-      { kind: 'image', name: 'charity-2', alt: 'Math & Logical Thinking Education Project, photo 2' },
-      { kind: 'image', name: 'charity-3', alt: 'Math & Logical Thinking Education Project, photo 3' },
-      { kind: 'image', name: 'charity-4', alt: 'Math & Logical Thinking Education Project, photo 4' },
-    ] satisfies ImageItem[],
-    video: { name: 'charity-video', alt: 'Math & Logical Thinking Education Project video' } as { name: VideoKey; alt: string },
+    stats: [
+      { value: 5, label: 'interactive learning sessions' },
+      { value: 25, label: 'elementary students' },
+      { value: 15, label: 'STEM building kits' },
+      { value: 50, label: 'essential supply packages' },
+    ] satisfies Stat[],
+    gallery: {
+      rows: [3, 2],
+      items: [
+        { kind: 'image', name: 'charity-1', alt: 'Students working on logic exercises in class', ratio: 4 / 3 },
+        { kind: 'image', name: 'charity-4', alt: 'Gia Khang teaching at the blackboard', ratio: 3 / 4 },
+        { kind: 'image', name: 'charity-2', alt: 'Volunteers and students with their STEM kits', ratio: 4 / 3 },
+        { kind: 'image', name: 'charity-3', alt: 'A mentoring session with the class', ratio: 4 / 3 },
+        { kind: 'video', name: 'charity-video', alt: 'Math & Logical Thinking Education Project video', ratio: 16 / 9 },
+      ],
+    } satisfies Gallery,
   },
   technical: {
     label: 'TECHNICAL EXPLORATION | Learning Beyond the Classroom',
     title: 'Saigon Hi-Tech Park Training Center',
     subtitle: 'Engineering Technology Training',
     dates: 'July – August 2025',
-    certificate: { name: 'training-certificate', alt: 'Saigon Hi-Tech Park Training Center certificate' } as { name: DocKey; alt: string },
-    photo: { name: 'training-photo', alt: 'Saigon Hi-Tech Park Training Center' } as { name: ImageKey; alt: string },
+    certificate: {
+      doc: 'training-certificate' as DocKey,
+      image: { kind: 'image', name: 'training-certificate', alt: 'Certificate of completion, Hi-Tech Youth Program, Saigon Hi-Tech Park Training Center', ratio: 1.434 } satisfies ImageItem,
+    },
+    photo: { kind: 'image', name: 'training-photo', alt: 'Training at Saigon Hi-Tech Park Training Center', ratio: 4 / 3 } satisfies ImageItem,
     subheading: 'Exploring the Technologies Behind Modern Engineering',
     paragraphs: [
       'My experience at the Saigon Hi-Tech Park Training Center introduced me to several technologies used in modern industrial and engineering environments.',
@@ -310,6 +371,7 @@ export const beyond = {
   },
   piano: {
     title: 'Piano — Finding Discipline Through Music',
+    // Shown when uploaded; until then the card shows an animated keyboard.
     image: { name: 'piano', alt: 'Piano' } as { name: ImageKey; alt: string },
     paragraphs: [
       'Music has also been an important part of my personal development.',

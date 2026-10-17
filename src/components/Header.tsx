@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { LINKS } from '../config/media'
 import { nav, site } from '../data/content'
 import { CloseIcon, MenuIcon } from './Icons'
@@ -8,17 +8,26 @@ const DESKTOP_NAV = '(min-width: 1180px)'
 export default function Header() {
   const [active, setActive] = useState('home')
   const [menuOpen, setMenuOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
   const progressRef = useRef<HTMLSpanElement>(null)
 
-  // Thin reading-progress line along the bottom edge of the header.
+  // Reading-progress line, a solid background once scrolled, and hide-on-scroll-down / show-on-scroll-up.
   useEffect(() => {
+    const header = headerRef.current
     const bar = progressRef.current
-    if (!bar) return
+    if (!header || !bar) return
     let frame = 0
+    let lastY = window.scrollY
     const update = () => {
       frame = 0
+      const y = window.scrollY
       const max = document.documentElement.scrollHeight - window.innerHeight
-      bar.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`
+      bar.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`
+      header.classList.toggle('is-scrolled', y > 8)
+      if (Math.abs(y - lastY) > 6) {
+        header.classList.toggle('is-hidden', y > lastY && y > 320 && !header.classList.contains('is-menu-open'))
+        lastY = y
+      }
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update)
@@ -65,7 +74,7 @@ export default function Header() {
   }, [menuOpen])
 
   return (
-    <header className={`site-header ${menuOpen ? 'is-menu-open' : ''}`}>
+    <header ref={headerRef} className={`site-header ${menuOpen ? 'is-menu-open' : ''}`}>
       <div className="container site-header__inner">
         <a href="#home" className="brand" onClick={() => setMenuOpen(false)}>
           <span className="brand__mark" aria-hidden="true" />
@@ -74,8 +83,8 @@ export default function Header() {
 
         <nav id="primary-nav" className={`nav ${menuOpen ? 'is-open' : ''}`} aria-label="Primary">
           <ul className="nav__list">
-            {nav.map((item) => (
-              <li key={item.id}>
+            {nav.map((item, i) => (
+              <li key={item.id} style={{ '--i': i } as CSSProperties}>
                 <a
                   href={`#${item.id}`}
                   className={`nav__link ${active === item.id ? 'is-active' : ''}`}
@@ -92,7 +101,7 @@ export default function Header() {
         </nav>
 
         <div className="site-header__actions">
-          <a className="btn btn--primary btn--sm" href={LINKS.resume} target="_blank" rel="noopener noreferrer">
+          <a className="btn btn--primary btn--sm" href={LINKS.resume} target="_blank" rel="noopener noreferrer" data-magnetic="">
             {site.resume}
           </a>
           <button

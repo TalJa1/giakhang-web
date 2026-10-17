@@ -9,6 +9,7 @@ import {
   PENDING_VIDEOS,
   VIDEOS,
 } from '../config/media'
+import type { MediaItem } from '../types'
 
 export type ImageKey = keyof typeof IMAGES
 export type VideoKey = keyof typeof VIDEOS
@@ -16,7 +17,12 @@ export type DocKey = keyof typeof DOCS
 
 const HEIC = /\.heic$/i
 
+function isLocal(file: string) {
+  return file.startsWith('/')
+}
+
 export function storageUrl(fileName: string): string {
+  if (isLocal(fileName)) return fileName
   return `https://firebasestorage.googleapis.com/v0/b/${BUCKET}/o/${encodeURIComponent(BASE_PATH + fileName)}?alt=media`
 }
 
@@ -24,7 +30,7 @@ function lookup(map: Readonly<Record<string, string>>, key: string): string | un
   return Object.hasOwn(map, key) ? map[key] : undefined
 }
 
-/** True when the image will render as a placeholder without any request (pending or not configured). */
+/** True when the image is pending or not configured, so it is never requested. */
 export function isImageUnavailable(name: string): boolean {
   return imageCandidates(name).length === 0
 }
@@ -36,6 +42,7 @@ export function isImageUnavailable(name: string): boolean {
 export function imageCandidates(name: string): string[] {
   const file = lookup(IMAGES, name)
   if (!file || PENDING_IMAGES.includes(name)) return []
+  if (isLocal(file)) return [file]
   const dot = file.lastIndexOf('.')
   const base = dot > 0 ? file.slice(0, dot) : file
   const files = new Set([file, ...FALLBACK_EXTENSIONS.map((ext) => base + ext)])
@@ -50,6 +57,10 @@ export function videoUrl(name: string): string | null {
 export function docUrl(name: string): string | null {
   const file = lookup(DOCS, name)
   return file && !PENDING_DOCS.includes(name) ? storageUrl(file) : null
+}
+
+export function isAvailable(item: MediaItem): boolean {
+  return item.kind === 'image' ? !isImageUnavailable(item.name) : videoUrl(item.name) !== null
 }
 
 /**

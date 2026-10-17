@@ -54,8 +54,18 @@ export function MusicIcon(props: IconProps) {
   )
 }
 
+export function GlobeIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z" />
+    </Svg>
+  )
+}
+
 export function AchievementIcon({ name, ...props }: IconProps & { name: IconName }) {
   if (name === 'trophy') return <TrophyIcon {...props} />
+  if (name === 'globe') return <GlobeIcon {...props} />
   if (name === 'music') return <MusicIcon {...props} />
   return <MedalIcon {...props} />
 }
@@ -159,6 +169,30 @@ export function PinIcon(props: IconProps) {
     <Svg {...props}>
       <path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.8 12 21 12 21Z" />
       <circle cx="12" cy="9.5" r="2.5" />
+    </Svg>
+  )
+}
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </Svg>
+  )
+}
+
+export function ExpandIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7" />
+    </Svg>
+  )
+}
+
+export function ArrowUpIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M12 19V5M6 11l6-6 6 6" />
     </Svg>
   )
 }
