@@ -46,7 +46,7 @@ export default function Achievements() {
                   </div>
                   <div className="tl-card__media">
                     {item.gallery && (
-                      <Gallery gallery={item.gallery} label={`${item.title}: photos and video`} maxRowHeight={340} />
+                      <Gallery gallery={item.gallery} label={`${item.title}: photos`} maxRowHeight={340} />
                     )}
                     {item.links && (
                       <ul className="reels">

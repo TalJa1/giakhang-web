@@ -17,10 +17,14 @@ export default function ProjectCard({ project }: { project: Project }) {
           <h3 id={titleId} className="project__title">
             <SplitWords text={project.title} />
           </h3>
-          <p className="meta">
-            <CalendarIcon size={16} />
-            {project.dates}
-          </p>
+          {project.tagline && <p className="project__tagline">{project.tagline}</p>}
+          {project.dates && (
+            <p className="meta">
+              <CalendarIcon size={16} />
+              {project.dates}
+            </p>
+          )}
+          {project.role && <p className="role-pill">{project.role}</p>}
         </div>
       </header>
 
@@ -34,7 +38,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             </span>
             {project.award.text}
           </p>
-          <Gallery gallery={project.award.gallery} label={`${project.award.text}: photos and video`} />
+          <Gallery gallery={project.award.gallery} label={`${project.award.text}: photos`} />
         </div>
       )}
 
@@ -76,21 +80,23 @@ export default function ProjectCard({ project }: { project: Project }) {
             </ul>
           </div>
 
-          <div className="project__links" data-reveal="up">
-            {project.links.map((link, i) => (
-              <a
-                key={link.href}
-                className={`btn ${i === 0 ? 'btn--primary' : 'btn--outline'}`}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-magnetic=""
-              >
-                {link.label}
-                <ArrowUpRightIcon size={16} />
-              </a>
-            ))}
-          </div>
+          {project.links.length > 0 && (
+            <div className="project__links" data-reveal="up">
+              {project.links.map((link, i) => (
+                <a
+                  key={link.href}
+                  className={`btn ${i === 0 ? 'btn--primary' : 'btn--outline'}`}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-magnetic=""
+                >
+                  {link.label}
+                  <ArrowUpRightIcon size={16} />
+                </a>
+              ))}
+            </div>
+          )}
         </aside>
       </div>
     </article>

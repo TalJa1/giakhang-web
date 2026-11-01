@@ -1,0 +1,3 @@
+# Full-size originals of the site photos; the site serves the web-sized copies in public/media/
+src/assets/*
+!src/assets/hero.png

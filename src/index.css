@@ -1454,6 +1454,14 @@ button {
   padding-bottom: 0;
 }
 
+.about__childhood {
+  margin-bottom: clamp(56px, 7vw, 88px);
+}
+
+.about__childhood-gallery {
+  margin-top: 32px;
+}
+
 .about__grid {
   display: grid;
   gap: 56px;
@@ -1615,6 +1623,18 @@ button {
   font-size: clamp(26px, 3.4vw, 46px);
   letter-spacing: -0.025em;
   line-height: 1.08;
+}
+
+.project__tagline {
+  margin-bottom: 12px;
+  font-family: var(--font-tech);
+  font-weight: 500;
+  font-size: clamp(17px, 1.6vw, 20px);
+  color: var(--red-dark);
+}
+
+.project__heading .role-pill {
+  margin-top: 0;
 }
 
 .project__gallery .jg__item {
@@ -1977,13 +1997,15 @@ button {
     gap: clamp(24px, 3.5vw, 48px);
   }
 
+  /* Photos above, reels below when a card has both. */
   .tl-card__media {
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    gap: 16px;
   }
 
+  /* Full width up to each child's own max-width (a right-aligned gallery would otherwise shrink to nothing). */
   .tl-card__media > * {
-    flex: 1;
+    width: 100%;
   }
 
   .tl-card__media .jg {
@@ -2029,6 +2051,10 @@ button {
   margin-top: 8px;
 }
 
+.panel__prose {
+  margin-top: 24px;
+}
+
 .logo-tile {
   width: 100%;
   max-width: 340px;
@@ -2047,6 +2073,50 @@ button {
 .logo-tile__inner .media {
   border-radius: var(--radius);
   background: var(--white);
+}
+
+.logo-tile__photo {
+  margin-top: 16px;
+}
+
+/* A lone portrait photo has flex-grow < 1, so it would not fill the tile's width on its own. */
+.logo-tile__photo .jg__item {
+  flex-grow: 1;
+}
+
+/* Activity panels (SAT Tutoring, Galileo, Creative Writing, Sports). */
+.activity__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 14px;
+}
+
+.activity__meta .role-pill,
+.panel .activity__meta .meta {
+  margin-top: 0;
+}
+
+.activity__head .block-subheading {
+  margin-bottom: 0;
+}
+
+.activity__body {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+}
+
+.activity__gallery .jg__item {
+  border: 1px solid var(--line);
+}
+
+@media (min-width: 900px) {
+  .activity__body {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: clamp(32px, 4vw, 56px);
+  }
 }
 
 .stats {
@@ -2200,34 +2270,12 @@ button {
 /* ==========================================================================
    Beyond engineering
    ========================================================================== */
-.beyond-grid {
-  display: grid;
-  gap: 32px;
-}
-
 .beyond-card__inner {
   height: 100%;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--white);
-  box-shadow: var(--shadow);
-}
-
-.beyond-card__media--logo {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 16 / 10;
-  padding: 24px;
-  background:
-    radial-gradient(circle at 30% 20%, rgb(181 18 27 / 0.08), transparent 55%),
-    var(--gray-bg);
-}
-
-.beyond-card__logo {
-  width: auto;
-  height: 100%;
-  border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
 
@@ -2280,9 +2328,21 @@ button {
   transform-origin: top;
 }
 
+.sports__intro {
+  max-width: 72ch;
+  margin-bottom: 32px;
+}
+
+/* Media beside the text instead of above it. */
 @media (min-width: 900px) {
-  .beyond-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .beyond-card--wide .beyond-card__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .beyond-card--wide .beyond-card__media--piano {
+    aspect-ratio: auto;
+    min-height: 100%;
   }
 }
 

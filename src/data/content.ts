@@ -1,5 +1,5 @@
 // ALL visible copy for the site. Text is verbatim from the client's brief (section 5) and the revision
-// document ("Website bổ sung và chỉnh sửa") — do not reword.
+// documents ("Website bổ sung và chỉnh sửa", and tab 3 of the requirements doc) — do not reword.
 // Alt text and aria labels are not visible copy; they only describe the media for screen readers.
 // Media `ratio` values are the real width / height of each file (galleries show images uncropped).
 import { CONTACT_EMAIL, LINKS } from '../config/media'
@@ -52,8 +52,8 @@ export const home = {
 // Highlights strip: reuses the achievements text exactly.
 export const highlights: { year: string; text: string; icon: IconName }[] = [
   { year: '2026', text: 'Gold Award — Silicon Valley International Invention Festival (SVIIF)', icon: 'medal' },
-  { year: '2026', text: 'Champion — Massachusetts VEX V5 Robotics High School State Championship', icon: 'trophy' },
-  { year: '2026', text: 'Participant — 2026 VEX Robotics World Championship', icon: 'globe' },
+  { year: '2026', text: 'Tournament Champion — iSTEAM VEX V5 Open Tournament', icon: 'trophy' },
+  { year: '2026', text: 'Qualifier — VEX Robotics World Championship, High School Division', icon: 'globe' },
   { year: '2019', text: 'ABRSM Grade 4 Piano', icon: 'music' },
 ]
 
@@ -62,6 +62,19 @@ export const highlights: { year: string; text: string; icon: IconName }[] = [
 export const about = {
   label: 'About Me',
   heading: "Hi, I'm Gia Khang.",
+  // Revision 3: paragraph 1, shown before the school text.
+  childhood: {
+    paragraph:
+      'Ever since I was a child, I have been fascinated by robots and the idea of building something that could move, respond, and perform tasks on its own. What began as a simple curiosity about how machines work gradually grew into a passion for designing, building, and understanding the technology behind them.',
+    gallery: {
+      items: [
+        { kind: 'image', name: 'about-childhood-1', alt: 'Young Gia Khang with a robot model he built', ratio: 0.75 },
+        { kind: 'image', name: 'about-childhood-2', alt: 'Young Gia Khang holding a small LEGO model', ratio: 0.75 },
+        { kind: 'image', name: 'about-childhood-3', alt: 'Gia Khang at a school science station', ratio: 1.333 },
+        { kind: 'image', name: 'about-childhood-4', alt: 'Gia Khang working on a hands-on science activity with classmates', ratio: 1.333 },
+      ],
+    } satisfies Gallery,
+  },
   intro:
     'I am a high school student at The Cambridge School of Weston in Massachusetts, with a growing passion for mechanical engineering, robotics, and intelligent systems.',
   school: {
@@ -94,7 +107,10 @@ export type Project = {
   num: string
   label: string
   title: string
-  dates: string
+  dates?: string
+  /** Line under the title, e.g. "Exploring Physics Through Mechanical Design". */
+  tagline?: string
+  role?: string
   award?: { text: string; gallery: Gallery }
   gallery: Gallery
   subheading: string
@@ -120,9 +136,7 @@ export const projects: { label: string; cards: Project[] } = {
         gallery: {
           items: [
             { kind: 'image', name: 'sviif-award-1', alt: 'SVIIF 2026 Gold Award diploma and medal', ratio: 1.29 },
-            { kind: 'image', name: 'sviif-award-2', alt: 'The team at the Silicon Valley International Invention Festival', ratio: 1.333 },
-            { kind: 'video', name: 'sviif-award-3', alt: 'SVIIF 2026 Gold Award video', ratio: 16 / 9 },
-          ],
+            { kind: 'image', name: 'sviif-award-2', alt: 'The team at the Silicon Valley International Invention Festival', ratio: 1.333 },          ],
         },
       },
       gallery: {
@@ -200,7 +214,58 @@ export const projects: { label: string; cards: Project[] } = {
         { label: 'Explore Project Introduction', href: LINKS.esp32Intro },
       ],
     },
+    {
+      id: 'trebuchet',
+      num: '03',
+      label: 'Featured Project 03',
+      title: 'Trebuchet Engineering Project',
+      tagline: 'Exploring Physics Through Mechanical Design',
+      role: 'Researcher & Builder',
+      gallery: {
+        rows: [2, 3],
+        items: [
+          { kind: 'image', name: 'trebuchet-4', alt: 'Steel-frame trebuchet with its throwing arm and counterweight', ratio: 1.335 },
+          { kind: 'image', name: 'trebuchet-5', alt: 'Side view of the steel-frame trebuchet', ratio: 1.335 },
+          { kind: 'image', name: 'trebuchet-2', alt: 'Close-up of the adjustable throwing arm', ratio: 1.335 },
+          { kind: 'image', name: 'trebuchet-3', alt: 'Close-up of the throwing arm pivot on the steel frame', ratio: 1.335 },
+          { kind: 'image', name: 'trebuchet-1', alt: 'ISHCMC Science Fair 2025 certificate of participation', ratio: 1.376 },
+        ],
+      },
+      subheading: 'Project Overview',
+      paragraphs: [
+        'How does changing the design of a mechanical system affect its performance?',
+        'I explored this question by designing and constructing a steel-frame trebuchet with an adjustable throwing arm. The project allowed me to investigate projectile motion through hands-on engineering, experimentation, and performance testing.',
+      ],
+      highlightsHeading: 'My Work Highlights',
+      highlights: [
+        'Designed and constructed a steel-frame trebuchet with an adjustable throwing arm.',
+        'Conducted experimental trials and measured launch distances to examine how adjustments affected projectile range.',
+        'Presented the prototype and experimental findings at the ISHCMC Science Fair 2025.',
+      ],
+      lessonsHeading: 'What I Learned',
+      lessons: [
+        'This project strengthened my understanding of how mechanical design decisions influence real-world performance. It also taught me the importance of testing ideas, collecting measurements, and using experimental results to evaluate a design.',
+      ],
+      links: [],
+    },
   ],
+}
+
+/* ---------- Activity panels (Leadership, Beyond Engineering) ---------- */
+
+export type Activity = {
+  id: string
+  title: string
+  /** Organisation line under the title. */
+  subtitle?: string
+  role?: string
+  /** Where / when, shown next to the role. */
+  meta?: string
+  subheading?: string
+  paragraphs: string[]
+  list?: { heading?: string; items: string[] }
+  lessons?: { heading: string; paragraphs: string[] }
+  gallery?: Gallery
 }
 
 /* ---------- 5.4 ACHIEVEMENTS ---------- */
@@ -236,29 +301,70 @@ export const achievements = {
       },
     },
     {
-      id: 'vex-state',
+      id: 'isteam',
       year: '2026',
-      title: 'Champion',
-      detail: 'Massachusetts VEX V5 Robotics High School State Championship',
+      title: 'Tournament Champion',
+      detail: 'iSTEAM VEX V5 Open Tournament',
       icon: 'trophy',
       gallery: {
         items: [
-          { kind: 'image', name: 'vex-champion', alt: 'Gia Khang at the Massachusetts VEX Robotics State Championship', ratio: 4 / 3 },
-          { kind: 'video', name: 'vex-champion', alt: 'Massachusetts VEX V5 Robotics State Championship video', ratio: 9 / 16 },
+          { kind: 'image', name: 'istem-champion-1', alt: 'Gia Khang and teammates with their robot at the iSTEAM VEX V5 Open Tournament', ratio: 0.75 },
+          { kind: 'image', name: 'istem-champion-2', alt: 'VEX V5 match in progress on the tournament screen', ratio: 1.333 },
         ],
       },
     },
     {
       id: 'vex-worlds',
       year: '2026',
-      title: 'Participant',
-      detail: '2026 VEX Robotics World Championship – VEX V5 Robotics Competition (High School Division)',
+      title: 'Qualifier',
+      detail: 'VEX Robotics World Championship, High School Division',
       icon: 'globe',
+      gallery: {
+        rows: [2, 2],
+        items: [
+          { kind: 'image', name: 'vex-worlds-1', alt: 'The team at the VEX Robotics World Championship', ratio: 1.333 },
+          { kind: 'image', name: 'vex-worlds-2', alt: 'The team at their pit at the VEX Robotics World Championship', ratio: 1.333 },
+          { kind: 'image', name: 'vex-worlds-3', alt: 'Working on the robot in the pit at the World Championship', ratio: 0.75 },
+          { kind: 'image', name: 'vex-worlds-4', alt: 'Gia Khang preparing the robot at the World Championship', ratio: 0.75 },
+        ],
+      },
       links: [
         { label: 'Watch Reel 01', href: LINKS.vexWorldsReel1 },
         { label: 'Watch Reel 02', href: LINKS.vexWorldsReel2 },
       ],
     },
+    {
+      id: 'vex-state',
+      year: '2026',
+      title: 'Qualifier',
+      detail: 'Massachusetts VEX V5 Robotics High School State Championship 2026',
+      icon: 'flag',
+      gallery: {
+        rows: [2, 2],
+        items: [
+          { kind: 'image', name: 'vex-champion', alt: 'Gia Khang at the Massachusetts VEX Robotics State Championship', ratio: 4 / 3 },
+          { kind: 'image', name: 'vex-state-3', alt: 'Gia Khang with teammates at the State Championship', ratio: 1.333 },
+          { kind: 'image', name: 'vex-state-4', alt: 'Gia Khang with the team robot at the State Championship', ratio: 0.75 },
+          { kind: 'image', name: 'vex-state-5', alt: 'Teammates adjusting the robot before a match', ratio: 0.75 },        ],
+      },
+    },
+    ...[
+      { id: 'rhino-balanced-learner', year: '2024-2025', title: 'Rhino Recognition – The Balanced Learner', image: 'rhino-balanced-learner-2024-25' },
+      { id: 'rhino-global-citizen', year: '2023-2024', title: 'Rhino Recognition – The Global Citizen', image: 'rhino-global-citizen-2023-24' },
+      { id: 'rhino-team-player-2023', year: '2023-2024', title: 'Rhino Recognition – The Team Player', image: 'rhino-team-player-2023-24' },
+      { id: 'rhino-team-player-2019', year: '2019-2020', title: 'Rhino Recognition – The Team Player', image: 'rhino-team-player-2019-20' },
+    ].map(
+      ({ id, year, title, image }): Achievement => ({
+        id,
+        year,
+        title,
+        detail: 'International School Ho Chi Minh City (ISHCMC)',
+        icon: 'star',
+        gallery: {
+          items: [{ kind: 'image', name: image as ImageKey, alt: `${title} certificate, ${year}`, ratio: 1.376 }],
+        },
+      }),
+    ),
     {
       id: 'abrsm',
       year: '2019',
@@ -296,6 +402,21 @@ export const leadership = {
       { value: 10, label: 'member student engineering team' },
     ] satisfies Stat[],
   },
+  // Revision 3: moved here from Beyond Engineering, right after YES.
+  weRead: {
+    title: 'We Read — Building a Community Through Books',
+    image: { name: 'weread-club', alt: 'We Read logo' } as { name: ImageKey; alt: string },
+    role: 'Vice President',
+    paragraphs: [
+      'While engineering challenges me to understand how systems work, reading encourages me to understand how people think.',
+      'As Vice President of We Read, I help coordinate a student reading community that brings young readers together to exchange ideas and explore different perspectives.',
+      'I have supported more than five book discussions and reading activities, while helping manage a team of over 10 members across content, events, and communications.',
+      'This experience has strengthened my communication, leadership, and critical-thinking skills.',
+    ],
+    gallery: {
+      items: [{ kind: 'image', name: 'weread-photo', alt: 'Gia Khang holding a book at a reading event', ratio: 0.75 }],
+    } satisfies Gallery,
+  },
   charity: {
     title: 'Math & Logical Thinking Education Project',
     subtitle: 'Ngoai Thuy Charity Class',
@@ -314,16 +435,41 @@ export const leadership = {
       { value: 50, label: 'essential supply packages' },
     ] satisfies Stat[],
     gallery: {
-      rows: [3, 2],
+      rows: [2, 2],
       items: [
         { kind: 'image', name: 'charity-1', alt: 'Students working on logic exercises in class', ratio: 4 / 3 },
         { kind: 'image', name: 'charity-4', alt: 'Gia Khang teaching at the blackboard', ratio: 3 / 4 },
         { kind: 'image', name: 'charity-2', alt: 'Volunteers and students with their STEM kits', ratio: 4 / 3 },
-        { kind: 'image', name: 'charity-3', alt: 'A mentoring session with the class', ratio: 4 / 3 },
-        { kind: 'video', name: 'charity-video', alt: 'Math & Logical Thinking Education Project video', ratio: 16 / 9 },
-      ],
+        { kind: 'image', name: 'charity-3', alt: 'A mentoring session with the class', ratio: 4 / 3 },      ],
     } satisfies Gallery,
   },
+  sat: {
+    id: 'sat-tutoring',
+    title: 'SAT Tutoring',
+    subtitle: 'Schoolhouse.world',
+    role: 'Volunteer SAT Tutor',
+    meta: 'Grades 11–12',
+    subheading: 'Making Learning More Accessible',
+    paragraphs: [
+      'I believe that sharing knowledge is one of the most meaningful ways to support others.',
+      'Through Schoolhouse.world, I helped students prepare for the SAT by explaining academic concepts, discussing test-taking strategies, and providing guidance tailored to their learning needs.',
+      'Beyond academic preparation, I aimed to help learners build confidence and approach challenging questions with greater independence.',
+    ],
+    list: {
+      heading: 'Key Contributions',
+      items: [
+        'Supported students in SAT preparation and academic skill development.',
+        'Explained challenging concepts and discussed effective test-taking strategies.',
+        'Encouraged confidence and independent problem-solving.',
+      ],
+    },
+    gallery: {
+      items: [
+        { kind: 'image', name: 'sat-tutoring-1', alt: 'Schoolhouse.world, free online tutoring', ratio: 1.905 },
+        { kind: 'image', name: 'sat-tutoring-2', alt: 'Schoolhouse certification portfolio with tutoring highlights', ratio: 1.31 },
+      ],
+    },
+  } satisfies Activity,
   technical: {
     label: 'TECHNICAL EXPLORATION | Learning Beyond the Classroom',
     title: 'Saigon Hi-Tech Park Training Center',
@@ -358,17 +504,73 @@ export const leadership = {
 
 export const beyond = {
   label: 'BEYOND ENGINEERING | The Other Side of Me',
-  weRead: {
-    title: 'We Read — Building a Community Through Books',
-    image: { name: 'weread-club', alt: 'We Read logo' } as { name: ImageKey; alt: string },
-    role: 'Vice President',
-    paragraphs: [
-      'While engineering challenges me to understand how systems work, reading encourages me to understand how people think.',
-      'As Vice President of We Read, I help coordinate a student reading community that brings young readers together to exchange ideas and explore different perspectives.',
-      'I have supported more than five book discussions and reading activities, while helping manage a team of over 10 members across content, events, and communications.',
-      'This experience has strengthened my communication, leadership, and critical-thinking skills.',
-    ],
-  },
+  activities: [
+    {
+      id: 'galileo',
+      title: 'Galileo Theater Production',
+      subtitle: 'Engineering Behind the Stage',
+      role: 'Sound Technician',
+      meta: 'The Cambridge School of Weston | 2025',
+      paragraphs: [
+        'Technology plays an important role not only in engineering laboratories but also in creative environments.',
+        "As a Sound Technician for my school's production of Galileo, I managed live sound cues to support the performance.",
+        'I also collaborated on developing subtitles to make the production more accessible to audience members with hearing difficulties.',
+      ],
+      list: {
+        heading: 'Key Contributions',
+        items: [
+          'Managed live sound cues during the theatrical production.',
+          'Supported the technical execution of the performance.',
+          'Collaborated on subtitle development to improve audience accessibility.',
+        ],
+      },
+      lessons: {
+        heading: 'What I Learned',
+        paragraphs: [
+          'This experience showed me how technical precision, teamwork, and creativity can come together to create a meaningful experience for an audience.',
+        ],
+      },
+      gallery: {
+        items: [
+          { kind: 'image', name: 'galileo-1', alt: 'Programme for the Galileo production at the Robin Wood Theater', ratio: 0.75 },
+          { kind: 'image', name: 'galileo-2', alt: 'The Galileo stage before the performance', ratio: 1.333 },
+          { kind: 'image', name: 'galileo-3', alt: 'Production credits listing the sound team', ratio: 0.75 },
+        ],
+      },
+    },
+    {
+      id: 'creative-writing',
+      title: 'Creative Writing',
+      subtitle: 'Exploring Humanity Through Stories',
+      role: 'Independent Writer',
+      meta: '2024 – 2026',
+      paragraphs: [
+        'Engineering allows me to understand how things work, while creative writing helps me explore how people think, feel, and experience the world.',
+        'Inspired by manga, I began writing a story about a high school student overcoming prejudice and navigating social challenges.',
+        'I continued exploring themes of humanity, identity, and personal growth through short stories and novels.',
+        'Writing has become another way for me to express ideas, explore different perspectives, and develop my creativity.',
+      ],
+      list: {
+        heading: 'Creative Interests',
+        items: ['Manga-inspired storytelling', 'Short stories and novels', 'Themes of identity, humanity, and personal growth'],
+      },
+      // Order as given by the client.
+      gallery: {
+        rows: [4, 5],
+        items: [
+          { kind: 'image', name: 'writing-1', alt: 'Gia Khang beside his manga project poster', ratio: 0.75 },
+          { kind: 'image', name: 'writing-2', alt: 'Poster: Manga and their impact', ratio: 0.75 },
+          { kind: 'image', name: 'writing-3', alt: 'Exhibition wall with artwork and written statement', ratio: 0.75 },
+          { kind: 'image', name: 'writing-4', alt: 'Written artist statement for "The Vietnamese"', ratio: 0.75 },
+          { kind: 'image', name: 'writing-5', alt: 'Painting: a figure in a red shirt with a yellow star', ratio: 0.75 },
+          { kind: 'image', name: 'writing-6', alt: 'Reference lacquer painting with its label', ratio: 0.75 },
+          { kind: 'image', name: 'writing-7', alt: 'Laptop, drawing tablet and printed story draft', ratio: 0.75 },
+          { kind: 'image', name: 'writing-8', alt: 'Gia Khang presenting his manga project to a visitor', ratio: 0.75 },
+          { kind: 'image', name: 'writing-9', alt: 'Gia Khang on stage at the 2024 Personal Project exhibition', ratio: 1.333 },
+        ],
+      },
+    },
+  ] satisfies Activity[],
   piano: {
     title: 'Piano — Finding Discipline Through Music',
     // Shown when uploaded; until then the card shows an animated keyboard.
@@ -379,6 +581,60 @@ export const beyond = {
       'Learning piano has helped me appreciate patience, concentration, and consistent practice—qualities that I also value in engineering.',
       'For me, music and engineering share something important: both require creativity, structure, attention to detail, and a willingness to improve through practice.',
     ],
+  },
+  sports: {
+    label: 'SPORTS & ATHLETICS | Beyond Engineering: Discipline, Teamwork & Perseverance',
+    intro:
+      'Beyond engineering and academics, sports have been an important part of my personal development. Through swimming and basketball, I have learned the value of consistent practice, perseverance, and teamwork.',
+    items: [
+      {
+        id: 'swimming',
+        title: 'Competitive Swimming',
+        subtitle: 'ISHCMC Stingrays Swim Team | International School Ho Chi Minh City',
+        role: 'Swimmer',
+        meta: '2020 – Present',
+        paragraphs: [
+          'Swimming has been an important part of my journey, teaching me the value of discipline, perseverance, and continuous improvement.',
+          'As a member of the ISHCMC Stingrays Swim Team, I developed my swimming techniques, physical endurance, and competitive skills through training and participation in swimming events.',
+        ],
+        list: {
+          heading: 'Highlights',
+          items: [
+            'Trained with the ISHCMC Stingrays Swim Team, strengthening swimming techniques, endurance, and competitive skills.',
+            'Participated in swimming competitions, including the 2020 Thu Duc District Open Youth Swimming Competition (8th Edition).',
+            'Developed discipline, resilience, and time management through swimming alongside academic commitments.',
+          ],
+        },
+        gallery: {
+          rows: [4, 3],
+          items: [
+            { kind: 'image', name: 'swim-1', alt: 'Gia Khang at the 2020 Thu Duc District Open Youth Swimming Competition', ratio: 1.333 },
+            { kind: 'image', name: 'swim-2', alt: 'Gia Khang at the competition venue', ratio: 0.75 },
+            { kind: 'image', name: 'swim-3', alt: 'Freestyle event heat sheet', ratio: 0.75 },
+            { kind: 'image', name: 'swim-4', alt: 'Breaststroke event heat sheet', ratio: 0.75 },            { kind: 'image', name: 'swim-6', alt: 'The ISHCMC Stingrays Swim Team', ratio: 1.333 },
+            { kind: 'image', name: 'swim-7', alt: 'Gia Khang with teammates by the pool', ratio: 1.333 },
+            { kind: 'image', name: 'swim-8', alt: 'Gia Khang with a teammate at a swim meet', ratio: 0.75 },
+          ],
+        },
+      },
+      {
+        id: 'basketball',
+        title: 'Basketball',
+        role: 'Basketball Team Member',
+        meta: 'International School Ho Chi Minh City (ISHCMC) | 2022',
+        paragraphs: ['Basketball has taught me the importance of communication, trust, and working toward a shared goal.'],
+        list: {
+          items: [
+            'Participated in basketball training sessions, developing teamwork, communication, and on-court coordination.',
+            'Represented the school at the SSA Basketball 3x3 Elite Tournament 2022.',
+            "Participated in the team's tournament performance and medal recognition, strengthening teamwork, discipline, and competitive spirit.",
+          ],
+        },
+        gallery: {
+          items: [{ kind: 'image', name: 'basketball-1', alt: 'The team with their medals at the SSA Basketball 3x3 Elite Tournament 2022', ratio: 1.335 }],
+        },
+      },
+    ] satisfies Activity[],
   },
 }
 

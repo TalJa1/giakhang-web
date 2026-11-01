@@ -1,8 +1,9 @@
 import type { CSSProperties } from 'react'
 import { beyond } from '../data/content'
 import { isImageUnavailable } from '../lib/media'
+import ActivityPanel from './ActivityPanel'
 import Img from './Img'
-import Section from './Section'
+import Section, { SubHead } from './Section'
 
 // One octave plus a fifth: white keys, and which gaps between them carry a black key.
 const WHITE_KEYS = 12
@@ -22,33 +23,17 @@ function Keyboard() {
 }
 
 export default function Beyond() {
-  const { weRead, piano } = beyond
+  const { activities, piano, sports } = beyond
   const hasPianoPhoto = !isImageUnavailable(piano.image.name)
 
   return (
     <Section id="beyond" num="06" label={beyond.label}>
-      <div className="beyond-grid" data-stagger="">
-        <article className="beyond-card" aria-labelledby="weread-title" data-reveal="up">
-          <div className="beyond-card__inner" data-tilt="">
-            <div className="beyond-card__media beyond-card__media--logo">
-              <Img name={weRead.image.name} alt={weRead.image.alt} ratio="1 / 1" fit="contain" className="beyond-card__logo" />
-            </div>
-            <div className="beyond-card__body">
-              <h3 id="weread-title" className="panel__title">
-                {weRead.title}
-              </h3>
-              <p className="role-pill">{weRead.role}</p>
-              <div className="prose">
-                {weRead.paragraphs.map((p) => (
-                  <p key={p}>{p}</p>
-                ))}
-              </div>
-            </div>
-            <span className="glare" aria-hidden="true" />
-          </div>
-        </article>
+      <div className="stack">
+        {activities.map((activity) => (
+          <ActivityPanel key={activity.id} activity={activity} />
+        ))}
 
-        <article className="beyond-card" aria-labelledby="piano-title" data-reveal="up">
+        <article className="beyond-card beyond-card--wide" aria-labelledby="piano-title" data-reveal="up">
           <div className="beyond-card__inner" data-tilt="">
             <div className="beyond-card__media beyond-card__media--piano">
               {hasPianoPhoto ? <Img name={piano.image.name} alt={piano.image.alt} ratio="16 / 10" /> : <Keyboard />}
@@ -66,6 +51,16 @@ export default function Beyond() {
             <span className="glare" aria-hidden="true" />
           </div>
         </article>
+      </div>
+
+      <SubHead label={sports.label} />
+      <p className="lead sports__intro" data-reveal="up">
+        {sports.intro}
+      </p>
+      <div className="stack">
+        {sports.items.map((activity) => (
+          <ActivityPanel key={activity.id} activity={activity} />
+        ))}
       </div>
     </Section>
   )

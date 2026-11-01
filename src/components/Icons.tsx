@@ -63,10 +63,29 @@ export function GlobeIcon(props: IconProps) {
   )
 }
 
+export function FlagIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M5 21V4" />
+      <path d="M5 4h11l-2 4 2 4H5" />
+    </Svg>
+  )
+}
+
+export function StarIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z" />
+    </Svg>
+  )
+}
+
 export function AchievementIcon({ name, ...props }: IconProps & { name: IconName }) {
   if (name === 'trophy') return <TrophyIcon {...props} />
   if (name === 'globe') return <GlobeIcon {...props} />
   if (name === 'music') return <MusicIcon {...props} />
+  if (name === 'flag') return <FlagIcon {...props} />
+  if (name === 'star') return <StarIcon {...props} />
   return <MedalIcon {...props} />
 }
 

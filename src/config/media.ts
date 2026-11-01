@@ -26,16 +26,61 @@ export const IMAGES = {
   "charity-3": "charity-3.jpg",
   "charity-4": "charity-4.jpg",
   "training-photo": "training-photo.jpg",
-  "training-certificate": "/media/training-certificate.jpg",
+  "training-certificate": "/media/training-certificate.webp",
   "weread-club": "weread-club.png",
-  "piano": "piano.jpg"
+  "piano": "piano.jpg",
+
+  // Revision 3 media, served from public/media/ (web-sized copies of the originals in src/assets/).
+  "about-childhood-1": "/media/about-childhood-1.webp",
+  "about-childhood-2": "/media/about-childhood-2.webp",
+  "about-childhood-3": "/media/about-childhood-3.webp",
+  "about-childhood-4": "/media/about-childhood-4.webp",
+  "trebuchet-1": "/media/trebuchet-1.webp",
+  "trebuchet-2": "/media/trebuchet-2.webp",
+  "trebuchet-3": "/media/trebuchet-3.webp",
+  "trebuchet-4": "/media/trebuchet-4.webp",
+  "trebuchet-5": "/media/trebuchet-5.webp",
+  "istem-champion-1": "/media/istem-champion-1.webp",
+  "istem-champion-2": "/media/istem-champion-2.webp",
+  "vex-worlds-1": "/media/vex-worlds-1.webp",
+  "vex-worlds-2": "/media/vex-worlds-2.webp",
+  "vex-worlds-3": "/media/vex-worlds-3.webp",
+  "vex-worlds-4": "/media/vex-worlds-4.webp",
+  "vex-state-3": "/media/vex-state-3.webp",
+  "vex-state-4": "/media/vex-state-4.webp",
+  "vex-state-5": "/media/vex-state-5.webp",
+  "rhino-balanced-learner-2024-25": "/media/rhino-balanced-learner-2024-25.webp",
+  "rhino-global-citizen-2023-24": "/media/rhino-global-citizen-2023-24.webp",
+  "rhino-team-player-2023-24": "/media/rhino-team-player-2023-24.webp",
+  "rhino-team-player-2019-20": "/media/rhino-team-player-2019-20.webp",
+  "sat-tutoring-1": "/media/sat-tutoring-1.webp",
+  "sat-tutoring-2": "/media/sat-tutoring-2.webp",
+  "weread-photo": "/media/extra-image-1.webp",
+  "galileo-1": "/media/galileo-1.webp",
+  "galileo-2": "/media/galileo-2.webp",
+  "galileo-3": "/media/galileo-3.webp",
+  "writing-1": "/media/writing-1.webp",
+  "writing-2": "/media/writing-2.webp",
+  "writing-3": "/media/writing-3.webp",
+  "writing-4": "/media/writing-4.webp",
+  "writing-5": "/media/writing-5.webp",
+  "writing-6": "/media/writing-6.webp",
+  "writing-7": "/media/writing-7.webp",
+  "writing-8": "/media/writing-8.webp",
+  "writing-9": "/media/writing-9.webp",
+  "swim-1": "/media/swim-1.webp",
+  "swim-2": "/media/swim-2.webp",
+  "swim-3": "/media/swim-3.webp",
+  "swim-4": "/media/swim-4.webp",
+  "swim-6": "/media/swim-6.webp",
+  "swim-7": "/media/swim-7.webp",
+  "swim-8": "/media/swim-8.webp",
+  "basketball-1": "/media/basketball-1.webp"
 } as const;
 
-export const VIDEOS = {
-  "vex-champion": "vex-champion.mp4",
-  "charity-video": "charity-video.mp4",
-  "sviif-award-3": "sviif-award-3.mp4"
-} as const;
+// All videos were removed from the site (too large). Galleries still support { kind: 'video' } items
+// if one is added back here.
+export const VIDEOS = {} as const;
 
 export const DOCS = {
   "training-certificate": "training-certificate.pdf"

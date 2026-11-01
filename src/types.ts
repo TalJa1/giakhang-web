@@ -17,7 +17,7 @@ export type VideoItem = {
 
 export type MediaItem = ImageItem | VideoItem
 
-export type IconName = 'medal' | 'trophy' | 'globe' | 'music'
+export type IconName = 'medal' | 'trophy' | 'globe' | 'music' | 'flag' | 'star'
 
 export type LinkButton = {
   label: string

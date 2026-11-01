@@ -1,6 +1,7 @@
 import { useRef, type CSSProperties } from 'react'
 import { about } from '../data/content'
 import { useScrollProgress } from '../hooks/useScrollProgress'
+import Gallery from './Gallery'
 import Gear from './Gear'
 import Img from './Img'
 import Section from './Section'
@@ -33,10 +34,17 @@ function Philosophy() {
 }
 
 export default function About() {
-  const { school } = about
+  const { school, childhood } = about
 
   return (
     <Section id="about" num="02" label={about.label} heading={about.heading} className="about" after={<Philosophy />}>
+      <div className="about__childhood">
+        <p className="lead about__intro" data-reveal="up">
+          {childhood.paragraph}
+        </p>
+        <Gallery gallery={childhood.gallery} label="Gia Khang as a child: photos" className="about__childhood-gallery" />
+      </div>
+
       <div className="about__grid">
         <div className="about__text">
           <p className="lead about__intro" data-reveal="up">

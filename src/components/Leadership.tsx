@@ -1,5 +1,6 @@
 import { leadership, ui } from '../data/content'
 import { docUrl } from '../lib/media'
+import ActivityPanel from './ActivityPanel'
 import StatRow from './CountUp'
 import Gallery from './Gallery'
 import { ArrowUpRightIcon, CalendarIcon, PdfIcon } from './Icons'
@@ -8,7 +9,7 @@ import Marquee from './Marquee'
 import Section, { SubHead } from './Section'
 
 export default function Leadership() {
-  const { yes, charity, technical } = leadership
+  const { yes, weRead, charity, sat, technical } = leadership
   const [yesLead, ...yesRest] = yes.paragraphs
   const [charityLead, ...charityRest] = charity.paragraphs
   const pdf = docUrl(technical.certificate.doc)
@@ -45,6 +46,31 @@ export default function Leadership() {
           </div>
         </article>
 
+        <article className="panel panel--yes" aria-labelledby="weread-title">
+          <div className="logo-tile" data-reveal="scale">
+            <div className="logo-tile__inner" data-tilt="">
+              <Img name={weRead.image.name} alt={weRead.image.alt} ratio="1 / 1" fit="contain" />
+              <span className="glare" aria-hidden="true" />
+            </div>
+            <Gallery gallery={weRead.gallery} label={`${weRead.title}: photos`} className="logo-tile__photo" />
+          </div>
+          <div className="panel__content">
+            <div data-reveal="up">
+              <h3 id="weread-title" className="panel__title">
+                {weRead.title}
+              </h3>
+              <p className="role-pill">{weRead.role}</p>
+            </div>
+            <div className="prose panel__prose" data-stagger="">
+              {weRead.paragraphs.map((p) => (
+                <p key={p} data-reveal="up">
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
+        </article>
+
         <article className="panel panel--charity" aria-labelledby="charity-title">
           <div className="panel__head" data-reveal="up">
             <h3 id="charity-title" className="panel__title">
@@ -66,8 +92,10 @@ export default function Leadership() {
             </div>
             <StatRow stats={charity.stats} className="stats--grid" />
           </div>
-          <Gallery gallery={charity.gallery} label={`${charity.title}: photos and video`} className="charity__gallery" />
+          <Gallery gallery={charity.gallery} label={`${charity.title}: photos`} className="charity__gallery" />
         </article>
+
+        <ActivityPanel activity={sat} />
       </div>
 
       <SubHead label={technical.label} />
