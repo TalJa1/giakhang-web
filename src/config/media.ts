@@ -18,8 +18,6 @@ export const IMAGES = {
   "proj2-3": "proj2-3.jpg",
   "proj2-4": "proj2-4.jpg",
   "proj2-5": "proj2-5.png",
-  "vex-champion": "vex-champion.jpg",
-  "abrsm-certificate": "abrsm-certificate.jpg",
   "yes-main": "yes-main.png",
   "charity-1": "charity-1.jpg",
   "charity-2": "charity-2.jpg",
@@ -28,7 +26,6 @@ export const IMAGES = {
   "training-photo": "training-photo.jpg",
   "training-certificate": "/media/training-certificate.webp",
   "weread-club": "weread-club.png",
-  "piano": "piano.jpg",
 
   // Revision 3 media, served from public/media/ (web-sized copies of the originals in src/assets/).
   "about-childhood-1": "/media/about-childhood-1.webp",
@@ -40,22 +37,28 @@ export const IMAGES = {
   "trebuchet-3": "/media/trebuchet-3.webp",
   "trebuchet-4": "/media/trebuchet-4.webp",
   "trebuchet-5": "/media/trebuchet-5.webp",
-  "istem-champion-1": "/media/istem-champion-1.webp",
-  "istem-champion-2": "/media/istem-champion-2.webp",
+  "isteam-1": "/media/isteam-1.webp",
+  "isteam-2": "/media/isteam-2.webp",
+  "isteam-3": "/media/isteam-3.webp",
+  "isteam-4": "/media/isteam-4.webp",
+  "isteam-5": "/media/isteam-5.webp",
+  "isteam-6": "/media/isteam-6.webp",
   "vex-worlds-1": "/media/vex-worlds-1.webp",
   "vex-worlds-2": "/media/vex-worlds-2.webp",
   "vex-worlds-3": "/media/vex-worlds-3.webp",
   "vex-worlds-4": "/media/vex-worlds-4.webp",
-  "vex-state-3": "/media/vex-state-3.webp",
-  "vex-state-4": "/media/vex-state-4.webp",
-  "vex-state-5": "/media/vex-state-5.webp",
+  "ma-state-1": "/media/ma-state-1.webp",
+  "ma-state-2": "/media/ma-state-2.webp",
+  "ma-state-3": "/media/ma-state-3.webp",
+  "ma-state-4": "/media/ma-state-4.webp",
+  "ma-state-5": "/media/ma-state-5.webp",
+  "ma-state-6": "/media/ma-state-6.webp",
   "rhino-balanced-learner-2024-25": "/media/rhino-balanced-learner-2024-25.webp",
   "rhino-global-citizen-2023-24": "/media/rhino-global-citizen-2023-24.webp",
   "rhino-team-player-2023-24": "/media/rhino-team-player-2023-24.webp",
   "rhino-team-player-2019-20": "/media/rhino-team-player-2019-20.webp",
   "sat-tutoring-1": "/media/sat-tutoring-1.webp",
   "sat-tutoring-2": "/media/sat-tutoring-2.webp",
-  "weread-photo": "/media/extra-image-1.webp",
   "galileo-1": "/media/galileo-1.webp",
   "galileo-2": "/media/galileo-2.webp",
   "galileo-3": "/media/galileo-3.webp",
@@ -75,7 +78,12 @@ export const IMAGES = {
   "swim-6": "/media/swim-6.webp",
   "swim-7": "/media/swim-7.webp",
   "swim-8": "/media/swim-8.webp",
-  "basketball-1": "/media/basketball-1.webp"
+  "basketball-1": "/media/basketball-1.webp",
+  "basketball-2": "/media/basketball-2.webp",
+  "basketball-3": "/media/basketball-3.webp",
+  "basketball-4": "/media/basketball-4.webp",
+  "piano": "/media/piano.webp",
+  "abrsm-certificate": "/media/abrsm-certificate.webp"
 } as const;
 
 // All videos were removed from the site (too large). Galleries still support { kind: 'video' } items
@@ -86,9 +94,9 @@ export const DOCS = {
   "training-certificate": "training-certificate.pdf"
 } as const;
 
-// Media NOT uploaded yet. Keys listed here are never requested and their slot is left out of the page
-// (the piano card shows a keyboard graphic instead). After uploading a file, delete its key from the list.
-export const PENDING_IMAGES: string[] = ["training-photo", "piano"];
+// Media NOT uploaded yet. Keys listed here are never requested and their slot is left out of the page.
+// After uploading a file, delete its key from the list.
+export const PENDING_IMAGES: string[] = ["training-photo"];
 export const PENDING_VIDEOS: string[] = [];
 export const PENDING_DOCS: string[] = [];
 
@@ -96,12 +104,11 @@ export const PENDING_DOCS: string[] = [];
 export const FALLBACK_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".JPG", ".JPEG", ".PNG"];
 
 export const LINKS = {
-  resume: "https://docs.google.com/document/d/1IMeKDGFXkH2GUz8AjsomILiy3yud-0LwFdrctuVej2k/edit?tab=t.0",
+  resume: "https://drive.google.com/file/d/1zpLtkBFzkruFr7BcjM3Z-VZI6ssIJ4l8/view?usp=sharing",
   sviifPoster: "https://drive.google.com/file/d/1uOTR8kAjf5ubeaTWtuJ9Gj6ofe65G6LH/view?usp=sharing",
   cycloidalReport: "https://drive.google.com/file/d/1g6yb9W8opMugpvzXC9c9a7tt2zg6t87Q/view?usp=sharing",
   esp32Report: "https://docs.google.com/document/d/1ty1GtNdOlbxV6zpmMP_lbBLLH1MXkmnI/edit?usp=sharing&ouid=111259990397367642739&rtpof=true&sd=true",
   esp32Intro: "https://drive.google.com/file/d/1w7eXaWg-nnLAZ3Nd4YSziNWcYAkIhToY/view?usp=sharing",
-  vexWorldsReel1: "https://www.facebook.com/reel/822652264183837",
-  vexWorldsReel2: "https://www.facebook.com/reel/922802633938432"
+  isteamReel: "https://drive.google.com/file/d/1_2hEHZLWz3RkE8T7pcSgkeFgBAIqElpg/view?usp=sharing"
 };
 export const CONTACT_EMAIL = ""; // empty = hide the email line (the client document only has the placeholder "[Student Email]")

@@ -307,11 +307,17 @@ export const achievements = {
       detail: 'iSTEAM VEX V5 Open Tournament',
       icon: 'trophy',
       gallery: {
+        rows: [3, 3],
         items: [
-          { kind: 'image', name: 'istem-champion-1', alt: 'Gia Khang and teammates with their robot at the iSTEAM VEX V5 Open Tournament', ratio: 0.75 },
-          { kind: 'image', name: 'istem-champion-2', alt: 'VEX V5 match in progress on the tournament screen', ratio: 1.333 },
+          { kind: 'image', name: 'isteam-1', alt: 'Gia Khang holding the Tournament Champion trophy beside the robot', ratio: 0.75 },
+          { kind: 'image', name: 'isteam-2', alt: 'The team with their trophies at the iSTEAM VEX V5 Open Tournament', ratio: 1.333 },
+          { kind: 'image', name: 'isteam-3', alt: 'VEX Tournament Champion trophy in front of robot 10102A', ratio: 0.75 },
+          { kind: 'image', name: 'isteam-4', alt: 'Gia Khang with two teammates at the tournament', ratio: 1.333 },
+          { kind: 'image', name: 'isteam-5', alt: 'Gia Khang and a teammate working on the robot', ratio: 0.75 },
+          { kind: 'image', name: 'isteam-6', alt: 'Teammates adjusting the robot at their table', ratio: 0.75 },
         ],
       },
+      links: [{ label: 'Watch Reel', href: LINKS.isteamReel }],
     },
     {
       id: 'vex-worlds',
@@ -328,10 +334,6 @@ export const achievements = {
           { kind: 'image', name: 'vex-worlds-4', alt: 'Gia Khang preparing the robot at the World Championship', ratio: 0.75 },
         ],
       },
-      links: [
-        { label: 'Watch Reel 01', href: LINKS.vexWorldsReel1 },
-        { label: 'Watch Reel 02', href: LINKS.vexWorldsReel2 },
-      ],
     },
     {
       id: 'vex-state',
@@ -340,12 +342,15 @@ export const achievements = {
       detail: 'Massachusetts VEX V5 Robotics High School State Championship 2026',
       icon: 'flag',
       gallery: {
-        rows: [2, 2],
+        rows: [3, 3],
         items: [
-          { kind: 'image', name: 'vex-champion', alt: 'Gia Khang at the Massachusetts VEX Robotics State Championship', ratio: 4 / 3 },
-          { kind: 'image', name: 'vex-state-3', alt: 'Gia Khang with teammates at the State Championship', ratio: 1.333 },
-          { kind: 'image', name: 'vex-state-4', alt: 'Gia Khang with the team robot at the State Championship', ratio: 0.75 },
-          { kind: 'image', name: 'vex-state-5', alt: 'Teammates adjusting the robot before a match', ratio: 0.75 },        ],
+          { kind: 'image', name: 'ma-state-1', alt: 'Gia Khang at the Massachusetts VEX Robotics State Championship', ratio: 1.333 },
+          { kind: 'image', name: 'ma-state-2', alt: 'Gia Khang and teammates with their robot at the State Championship', ratio: 0.75 },
+          { kind: 'image', name: 'ma-state-3', alt: 'Gia Khang beside the robot and the 10102A team sign', ratio: 1.333 },
+          { kind: 'image', name: 'ma-state-4', alt: 'The competition floor at the State Championship', ratio: 1.333 },
+          { kind: 'image', name: 'ma-state-5', alt: 'Team rankings on the tournament screen', ratio: 1.333 },
+          { kind: 'image', name: 'ma-state-6', alt: 'Elimination bracket on the tournament screen', ratio: 1.333 },
+        ],
       },
     },
     ...[
@@ -373,7 +378,7 @@ export const achievements = {
       org: 'Associated Board of the Royal Schools of Music (ABRSM)',
       icon: 'music',
       gallery: {
-        items: [{ kind: 'image', name: 'abrsm-certificate', alt: 'ABRSM Grade 4 Piano certificate', ratio: 0.75 }],
+        items: [{ kind: 'image', name: 'abrsm-certificate', alt: 'ABRSM Grade 4 Piano certificate', ratio: 0.727 }],
       },
     },
   ] satisfies Achievement[],
@@ -413,9 +418,6 @@ export const leadership = {
       'I have supported more than five book discussions and reading activities, while helping manage a team of over 10 members across content, events, and communications.',
       'This experience has strengthened my communication, leadership, and critical-thinking skills.',
     ],
-    gallery: {
-      items: [{ kind: 'image', name: 'weread-photo', alt: 'Gia Khang holding a book at a reading event', ratio: 0.75 }],
-    } satisfies Gallery,
   },
   charity: {
     title: 'Math & Logical Thinking Education Project',
@@ -573,8 +575,7 @@ export const beyond = {
   ] satisfies Activity[],
   piano: {
     title: 'Piano — Finding Discipline Through Music',
-    // Shown when uploaded; until then the card shows an animated keyboard.
-    image: { name: 'piano', alt: 'Piano' } as { name: ImageKey; alt: string },
+    image: { name: 'piano', alt: 'Gia Khang holding his ABRSM Grade 4 Piano Exam Pieces book' } as { name: ImageKey; alt: string },
     paragraphs: [
       'Music has also been an important part of my personal development.',
       'In 2019, I passed the ABRSM Grade 4 Piano examination in Music Performance, earning 15 credits at Level 2.',
@@ -622,16 +623,26 @@ export const beyond = {
         title: 'Basketball',
         role: 'Basketball Team Member',
         meta: 'International School Ho Chi Minh City (ISHCMC) | 2022',
-        paragraphs: ['Basketball has taught me the importance of communication, trust, and working toward a shared goal.'],
+        paragraphs: [
+          'Basketball has taught me the importance of communication, trust, and working toward a shared goal.',
+          'Basketball has been a meaningful part of my school experience, helping me develop not only my physical abilities but also important skills in teamwork, communication, and perseverance. Through regular training sessions, I learned the importance of discipline, coordination, and trusting my teammates while working toward a common goal.',
+          'One of my memorable experiences was representing International School Ho Chi Minh City (ISHCMC) at the SSA Basketball 3x3 Elite Tournament 2022. Competing against other teams challenged me to stay focused, make quick decisions under pressure, and adapt to the fast-paced nature of the game.',
+          'Beyond competition, basketball taught me that individual effort is only one part of achieving success. Effective communication, mutual support, and the willingness to learn from mistakes are equally important. These lessons have continued to influence how I approach teamwork and challenges, both on the basketball court and in my engineering projects.',
+        ],
         list: {
           items: [
             'Participated in basketball training sessions, developing teamwork, communication, and on-court coordination.',
-            'Represented the school at the SSA Basketball 3x3 Elite Tournament 2022.',
+            'Won in 2 tournaments: Gold Medal at the SSA Basketball 3x3 Elite Tournament (2021–2022).',
             "Participated in the team's tournament performance and medal recognition, strengthening teamwork, discipline, and competitive spirit.",
           ],
         },
         gallery: {
-          items: [{ kind: 'image', name: 'basketball-1', alt: 'The team with their medals at the SSA Basketball 3x3 Elite Tournament 2022', ratio: 1.335 }],
+          items: [
+            { kind: 'image', name: 'basketball-1', alt: 'The team with their medals at the SSA Basketball 3x3 Elite Tournament 2022', ratio: 1.335 },
+            { kind: 'image', name: 'basketball-2', alt: 'Players wearing their medals beside the coach', ratio: 1.335 },
+            { kind: 'image', name: 'basketball-3', alt: 'Medal ceremony in front of the tournament backdrop', ratio: 1.335 },
+            { kind: 'image', name: 'basketball-4', alt: 'A game on the court at the tournament', ratio: 1.335 },
+          ],
         },
       },
     ] satisfies Activity[],

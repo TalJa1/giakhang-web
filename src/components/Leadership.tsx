@@ -52,7 +52,6 @@ export default function Leadership() {
               <Img name={weRead.image.name} alt={weRead.image.alt} ratio="1 / 1" fit="contain" />
               <span className="glare" aria-hidden="true" />
             </div>
-            <Gallery gallery={weRead.gallery} label={`${weRead.title}: photos`} className="logo-tile__photo" />
           </div>
           <div className="panel__content">
             <div data-reveal="up">

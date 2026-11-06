@@ -36,7 +36,7 @@ Open `src/config/media.ts`:
 - `BASE_PATH` is the folder inside the bucket (currently `"GiaKhang/"`). It is **case-sensitive** and must keep
   the trailing slash.
 - `IMAGES`, `VIDEOS` and `DOCS` map a key used by the site (left) to the file name in Storage (right). To point a
-  slot at a different file, change only the right-hand value, e.g. `"piano": "piano-recital.jpg"`.
+  slot at a different file, change only the right-hand value, e.g. `"training-photo": "training-photo-2.jpg"`.
 - If an image fails to load, the site automatically retries the same base name with `.jpg`, `.jpeg`, `.png`,
   `.webp`, `.JPG`, `.JPEG`, `.PNG` (see `FALLBACK_EXTENSIONS`) before showing the placeholder, so a wrong
   extension is not fatal.
@@ -59,7 +59,7 @@ left out of the page (no "coming soon" boxes).
 
 1. Upload the file to the `GiaKhang/` folder with exactly the name listed in `IMAGES` / `VIDEOS` / `DOCS`
    (or change the name there).
-2. Delete its key from the matching `PENDING_*` list, e.g. remove `"piano"` from `PENDING_IMAGES`.
+2. Delete its key from the matching `PENDING_*` list, e.g. remove `"training-photo"` from `PENDING_IMAGES`.
 3. Commit and redeploy.
 
 ### Optimize images before uploading
@@ -93,6 +93,5 @@ All animation respects the visitor's "reduce motion" setting: with it on, the pa
 
 Optional. These slots are hidden until the file exists:
 
-- [ ] `piano.jpg`: Piano photo (until then the piano card shows an animated keyboard)
 - [ ] `training-photo.jpg`: Saigon Hi-Tech Park Training Center photo (would appear under the certificate)
 - [ ] Contact email: set `CONTACT_EMAIL` in `src/config/media.ts` (the email line stays hidden while it is empty)
